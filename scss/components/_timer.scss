@@ -1,0 +1,32 @@
+@import "../abstracts/variables";
+
+.timer {
+  padding-top: 150px;
+  text-align: center;
+
+  &-title {
+    font-size: 36px;
+    color: $color-terracotta;
+  }
+
+  &-action {
+    font-size: 24px;
+    color: $color-white;
+    margin-top: 40px;
+  }
+
+  &-numbers {
+    margin-top: 40px;
+    font-size: 90px;
+    color: $color-terracotta;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 20%;
+      height: 1px;
+      background-color: $color-terracotta;
+      margin: 4px auto 0;
+    }
+  }
+}

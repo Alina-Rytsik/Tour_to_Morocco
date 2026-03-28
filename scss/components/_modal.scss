@@ -1,0 +1,60 @@
+@import "../abstracts/variables";
+
+.overlay {
+  position: fixed;
+  display: none;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 20;
+
+  .popup {
+    position: fixed;
+    left: 50%;
+    top: 150px;
+    max-width: 752px;
+    width: 95%;
+    transform: translateX(-50%);
+    background-color: $color-bg-light;
+
+    &-title {
+      background-color: $color-terracotta;
+      color: $color-white;
+      text-align: center;
+      padding: 20px;
+      text-transform: uppercase;
+    }
+
+    &-form {
+      padding: 35px 50px;
+      &__input {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 20px;
+        background-color: $color-terracotta;
+        border: none;
+        color: white;
+        text-align: center;
+      }
+      &__btn {
+        width: 100%;
+        height: 50px;
+        border: 1px solid $color-terracotta;
+        color: $color-terracotta;
+        background: transparent;
+        cursor: pointer;
+        &:hover { box-shadow: 0 0 10px $color-terracotta; }
+      }
+    }
+
+    &-close {
+      position: absolute;
+      right: -25px;
+      top: -35px;
+      color: white;
+      font-size: 35px;
+      cursor: pointer;
+    }
+  }
+}

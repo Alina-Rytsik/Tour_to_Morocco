@@ -1,0 +1,47 @@
+@import "../abstracts/variables";
+
+footer {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-overlay;
+
+  .social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+
+    &-block {
+      width: 70px;
+      height: 70px;
+      border: 1px solid rgba($color-terracotta, 0.5);
+      margin-right: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.3s;
+
+      &:hover {
+        box-shadow: 0 0 15px $color-terracotta;
+        border-color: $color-terracotta;
+      }
+
+      a {
+        display: block;
+        img {
+          width: 35px;
+        }
+      }
+    }
+  }
+}
+
+.copyright {
+  text-align: center;
+  color: rgba($color-white, 0.5);
+  font-size: 14px;
+  padding-bottom: 20px;
+}

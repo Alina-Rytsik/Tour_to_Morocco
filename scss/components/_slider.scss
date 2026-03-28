@@ -1,0 +1,101 @@
+@import "../abstracts/variables";
+
+.slider {
+  margin-top: 150px;
+  position: relative;
+
+  &-title {
+    font-size: 32px;
+    color: $color-sand;
+    margin-left: 50px;
+    &::after {
+      content: '';
+      display: block;
+      width: 10%;
+      height: 1px;
+      background-color: $color-terracotta;
+      margin-top: 4px;
+    }
+  }
+
+  .wrap {
+    width: 100%;
+    position: relative;
+
+    .slider-item {
+      width: 80%;
+      margin: 50px auto 0;
+      position: relative;
+      img { width: 100%; }
+    }
+
+    // Стрелки управления
+    .prev, .next {
+      position: absolute;
+      top: 0;
+      width: 90px;
+      height: 100%;
+      cursor: pointer;
+      background-color: transparent;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.4);
+        .arrow-left, .arrow-right { opacity: 1; }
+      }
+    }
+
+    .prev { 
+      left: 10%; 
+      .arrow-left {
+        width: 30px;
+        height: 30px;
+        background: url(../icons/left-arrow.png) center no-repeat;
+        background-size: cover;
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: .4;
+        transition: 1s;
+      }
+    }
+
+    .next { 
+      right: 10%; 
+      .arrow-right {
+        width: 30px;
+        height: 30px;
+        background: url(../icons/right-arrow.png) center no-repeat;
+        background-size: cover;
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: .4;
+        transition: 1s;
+      }
+    }
+  }
+
+  &-dots {
+    width: 90%;
+    margin: 20px auto 0;
+    display: flex;
+    justify-content: center;
+
+    .dot {
+      cursor: pointer;
+      height: 16px;
+      width: 16px;
+      margin: 0 10px;
+      background-color: $color-terracotta;
+      border-radius: 50%;
+      transition: background-color 0.6s ease;
+
+      &-active {
+        background-color: #000;
+        height: 18px;
+        width: 18px;
+      }
+    }
+  }
+}
