@@ -3,6 +3,8 @@
 .timer {
   padding-top: 150px;
   text-align: center;
+  width: 100%;
+  background: url(../img/main_bg.jpg) 50% 50% no-repeat;
 
   &-title {
     font-size: 36px;
@@ -18,7 +20,7 @@
   &-numbers {
     margin-top: 40px;
     font-size: 90px;
-    color: $color-terracotta;
+    color: $color-sand;
 
     &::after {
       content: '';
@@ -29,4 +31,23 @@
       margin: 4px auto 0;
     }
   }
+
+  button {
+      margin-top: 60px;
+      width: 180px;
+      height: 40px;
+      font-size: 16px;
+      background-color: transparent;
+      border: 1px solid $color-terracotta;
+      color: $color-terracotta;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+
+      &:hover {
+        box-shadow: 0 0 10px $color-terracotta;
+        background-color: $color-terracotta;
+        color: $color-white;
+      }
+    }
 }

@@ -11,8 +11,10 @@
   &-img {
     width: 50%;
     img {
-      height: 550px;
+      width: 85%;
+      margin-left: 10%;
       transform: translateY(-13%);
+      box-shadow: 0px 0px 30px rgb(247 103 73);
     }
   }
 
@@ -55,19 +57,20 @@
 
       button {
         margin-top: 60px;
-        width: 150px;
+        width: 180px;
         height: 40px;
+        font-size: 12px;
         background-color: transparent;
         border: 1px solid $color-terracotta;
         color: $color-terracotta;
+        text-align: center;
         cursor: pointer;
         font-weight: bold;
+        text-transform: uppercase;
         transition: 0.3s;
-
+        
         &:hover {
-          box-shadow: 0 0 10px $color-terracotta;
-          background-color: $color-terracotta;
-          color: $color-white;
+          box-shadow: 0px 0px 5px $color-terracotta;
         }
       }
     }

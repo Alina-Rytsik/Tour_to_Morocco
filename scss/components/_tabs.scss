@@ -2,7 +2,7 @@
 
 .content {
   width: 100%;
-  background: url(../img/main_bg.jpg) 50% 50% no-repeat;
+  background: url(../img/main_bg.jpg) 50% 84% no-repeat;
 
   .info {
     width: 100%;
@@ -67,6 +67,7 @@
       .description-btn {
         display: block;
         width: 180px;
+        font-size: 12px;
         border: 1px solid $color-terracotta;
         color: $color-terracotta;
         text-align: center;
