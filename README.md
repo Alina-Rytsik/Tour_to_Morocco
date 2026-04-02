@@ -26,7 +26,7 @@ The main purpose of this project was to demonstrate core Frontend development sk
 
 ## 📸 Interface Preview
 <p align="center">
-  <img src="interface/photo 1.png" width="800" alt=">
+  <img src="interface/photo 1.png" width="800" alt="">
 </p>
 
 ## ⚙️ Installation
