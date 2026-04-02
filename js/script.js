@@ -39,16 +39,30 @@ window.addEventListener('DOMContentLoaded', function () {
 
   //Timer
 
-  let deadline = '2025-04-10';
+  let deadline;
+
+  if (localStorage.getItem('timer_deadline')) {
+    deadline = localStorage.getItem('timer_deadline');
+  } else {
+    // Если зашли первый раз - создаем новую: сейчас + 48 часов
+    let date = new Date();
+    date.setHours(date.getHours() + 48);
+    deadline = date.toString();
+    localStorage.setItem('timer_deadline', deadline);
+  }
 
   function getTimeRemaining(endtime) {
-    let t = Date.parse(endtime) - Date.parse(new Date()),
-      // время = конечная дата - дата в настоящий момент.
-      seconds = Math.floor((t / 1000) % 60), //целое число((милисекунды)% 60мин)
-      minutes = Math.floor((t / 1000 / 60) % 60), //ц.ч.=(мин.)% 1 час
-      hours = Math.floor(t / (1000 * 60 * 60));
-    // hours = Math.floor((t/1000/60/60) % 24)
-    // days = Math.floor((t/(1000*60*60*24)))
+    // Разница между дедлайном и текущим моментом в миллисекундах
+    const t = Date.parse(endtime) - Date.parse(new Date());
+
+    // Если время вышло, возвращаем нули
+    if (t <= 0) {
+      return { total: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
+
+    const seconds = Math.floor((t / 1000) % 60);
+    const minutes = Math.floor((t / 1000 / 60) % 60);
+    const hours = Math.floor(t / (1000 * 60 * 60));
 
     return {
       total: t,
@@ -58,22 +72,33 @@ window.addEventListener('DOMContentLoaded', function () {
     };
   }
 
+  // Вспомогательная функция для добавления нуля перед числом (9 -> 09)
+  function addZero(num) {
+    return num < 10 ? `0${num}` : num;
+  }
+
   function setClock(id, endtime) {
-    let timer = document.getElementById(id),
-      hours = timer.querySelector('.hours'),
-      minutes = timer.querySelector('.minutes'),
-      seconds = timer.querySelector('.seconds'),
-      timeTnterval = setInterval(updateClock, 1000);
+    const timer = document.getElementById(id);
+    const hours = timer.querySelector('.hours');
+    const minutes = timer.querySelector('.minutes');
+    const seconds = timer.querySelector('.seconds');
+    const timeInterval = setInterval(updateClock, 1000);
+
+    // Запускаем один раз сразу, чтобы не ждать 1 секунду до первого тика setInterval
+    updateClock();
 
     function updateClock() {
-      let t = getTimeRemaining(endtime);
+      const t = getTimeRemaining(endtime);
 
-      hours.textContent = t.hours;
-      minutes.textContent = t.minutes;
-      seconds.textContent = t.seconds;
+      hours.textContent = addZero(t.hours);
+      minutes.textContent = addZero(t.minutes);
+      seconds.textContent = addZero(t.seconds);
 
       if (t.total <= 0) {
-        clearInterval(timeTnterval); //остановить
+        clearInterval(timeInterval);
+        hours.textContent = '00';
+        minutes.textContent = '00';
+        seconds.textContent = '00';
       }
     }
   }
@@ -98,51 +123,74 @@ window.addEventListener('DOMContentLoaded', function () {
     document.body.style.overflow = '';
   });
 
+  // Закрытие при клике на подложку
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Закрытие при нажатии Escape
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.style.display === 'block') {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+
   // Form
 
-  let message = {
+  // Form - отправка через Fetch API
+
+  const message = {
     loading: 'Загрузка...',
     success: 'Спасибо! Скоро мы с вами свяжемся!',
     failure: 'Что-то пошло не так...',
   };
 
-  let form = document.querySelector('.main-form'),
-    input = form.getElementsByTagName('input'),
+  const form = document.querySelector('.main-form'),
+    inputs = form.querySelectorAll('input'),
     statusMessage = document.createElement('div');
 
   statusMessage.classList.add('status');
+  statusMessage.style.color = '#E2725B';
+  statusMessage.style.margin = '30px 10px 10px 10px';
 
   form.addEventListener('submit', function (event) {
     event.preventDefault();
     form.appendChild(statusMessage);
+    statusMessage.textContent = message.loading;
 
-    let request = new XMLHttpRequest();
-    request.open('POST', 'server.php');
-    request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    const formData = new FormData(form);
 
-    let formData = new FormData(form);
+    // Превращаем FormData в обычный объект для JSON
+    const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-    let obj = {};
-    formData.forEach(function (value, key) {
-      obj[key] = value;
-    });
-    let json = JSON.stringify(obj);
-
-    request.send(json);
-
-    request.addEventListener('readystatechange', function () {
-      if (request.readyState < 4) {
-        statusMessage.innerHTML = message.loading;
-      } else if (request.readyState === 4 && request.status == 200) {
-        statusMessage.innerHTML = message.success;
-      } else {
-        statusMessage.innerHTML = message.failure;
-      }
-    });
-
-    for (let i = 0; i < input.length; i++) {
-      input[i].value = '';
-    }
+    fetch('https://formspree.io/f/mnjopowl', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json,
+    })
+      .then((response) => {
+        if (response.ok) {
+          statusMessage.textContent = message.success;
+          form.reset(); // Очистить форму
+        } else {
+          throw new Error();
+        }
+      })
+      .catch(() => {
+        statusMessage.textContent = message.failure;
+      })
+      .finally(() => {
+        // Удаляем сообщение через 6 секунд
+        setTimeout(() => {
+          statusMessage.remove();
+        }, 6000);
+      });
   });
 
   // Slider
@@ -199,44 +247,37 @@ window.addEventListener('DOMContentLoaded', function () {
 
   // Calc
 
-  let persons = document.querySelectorAll('.counter-block-input')[0],
+  const persons = document.querySelectorAll('.counter-block-input')[0],
     restDays = document.querySelectorAll('.counter-block-input')[1],
     place = document.getElementById('select'),
-    totalValue = document.getElementById('total'),
-    personsSum = 0,
-    daysSum = 0,
-    total = 0;
+    totalValue = document.getElementById('total');
 
-  totalValue.innerHTML = 0;
+  // Базовая стоимость тура на человека в день (например, для Марокко)
+  const basePrice = 4000;
 
-  persons.addEventListener('change', function () {
-    personsSum = +this.value;
-    total = (daysSum + personsSum) * 4000;
+  totalValue.textContent = 0;
 
-    if (restDays.value == '') {
-      totalValue.innerHTML = 0;
+  // Создаем ОДНУ функцию для расчета
+  const calcTotal = () => {
+    const p = +persons.value; // преобразуем в число
+    const d = +restDays.value;
+    const multiplier = +place.options[place.selectedIndex].value;
+
+    // Проверяем: если поля пустые или введено 0/отрицательное число
+    if (persons.value === '' || restDays.value === '' || p <= 0 || d <= 0) {
+      totalValue.textContent = 0;
     } else {
-      totalValue.innerHTML = total;
-    }
-  });
+      // Формула: (Дни * Люди * Базовая цена) * Коэффициент места
+      const result = p * d * basePrice * multiplier;
 
-  restDays.addEventListener('change', function () {
-    daysSum = +this.value;
-    total = (daysSum + personsSum) * 4000;
-
-    if (persons.value == '') {
-      totalValue.innerHTML = 0;
-    } else {
-      totalValue.innerHTML = total;
+      // Анимация появления числа
+      totalValue.textContent = result;
     }
-  });
+  };
 
-  place.addEventListener('change', function () {
-    if (restDays.value == '' || persons.value == '') {
-      totalValue.innerHTML = 0;
-    } else {
-      let a = total;
-      totalValue.innerHTML = a * this.options[this.selectedIndex].value;
-    }
-  });
+  // Назначаем функцию на события
+  // Используем 'input', чтобы расчет шел сразу ПРИ ВВОДЕ, а не после потери фокуса
+  persons.addEventListener('input', calcTotal);
+  restDays.addEventListener('input', calcTotal);
+  place.addEventListener('change', calcTotal);
 });
