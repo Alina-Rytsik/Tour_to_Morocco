@@ -32,9 +32,9 @@ The main purpose of this project was to demonstrate core Frontend development sk
 
 ## ⚙️ Installation
 Just clone the repository and open `index.html` via Live Server:
-```bash
+```bash`
 git clone https://github.com/Alina-Rytsik/Tour_to_Morocco.git
-`
+
 
 ## 👩‍💻 Author
 Alina Rytsik
