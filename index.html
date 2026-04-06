@@ -9,6 +9,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="shortcut icon" href="/icons/Tuor-icon.png" type="image/x-icon" />
   </head>
   <body>
     <header>
@@ -171,11 +172,17 @@
           <div class="counter-title">Рассчитайте стоимость вашего отдыха</div>
           <div class="counter-block">
             <div class="counter-block-option">Количество людей</div>
-            <input type="number" min="1" step="1" class="counter-block-input" />
+            <input
+              name="persons_count"
+              type="number"
+              min="1"
+              step="1"
+              class="counter-block-input"
+            />
           </div>
           <div class="counter-block">
             <div class="counter-block-option">На сколько дней</div>
-            <input type="number" min="1" step="1" class="counter-block-input" />
+            <input name="days_count" type="number" min="1" step="1" class="counter-block-input" />
           </div>
           <div class="counter-block">
             <div class="counter-block-option">Выберете базу</div>
@@ -198,8 +205,22 @@
           <div class="contact-form">
             <div class="contact-form-title">Мы с вами свяжемся</div>
             <form id="form">
-              <input required type="email" placeholder="Ваша почта" />
-              <input required type="tel" placeholder="Ваш телефон" />
+              <input
+                id="user_email"
+                required
+                name="email"
+                type="email"
+                placeholder="Ваша почта"
+                autocomplete="email"
+              />
+              <input
+                id="user_phone"
+                required
+                name="telefon"
+                type="tel"
+                placeholder="Ваш телефон"
+                autocomplete="tel"
+              />
               <button type="submit">Отправить</button>
             </form>
           </div>
@@ -243,11 +264,13 @@
             <div class="popup-form-header">Узнайте больше о своём отдыхе</div>
             <label class="popup-form__label" for="phone"> Введите ваш номер телефона: </label>
             <input
+              id="phone"
               class="popup-form__input"
               name="phone"
               type="tel"
               required
               placeholder="+375 888 77 66"
+              autocomplete="tel"
             />
             <button class="button popup-form__btn">Оставить заявку!</button>
           </form>
