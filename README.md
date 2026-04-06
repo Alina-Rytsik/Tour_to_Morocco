@@ -27,6 +27,7 @@ The main purpose of this project was to demonstrate core Frontend development sk
 ## 📸 Interface Preview
 <p align="center">
   <img src="interface/photo 1.png" width="800" alt="">
+  <img src="interface/photo 2.png" width="800" alt="">
 </p>
 
 ## ⚙️ Installation
@@ -35,5 +36,5 @@ Just clone the repository and open `index.html` via Live Server:
 git clone https://github.com/Alina-Rytsik/Tour_to_Morocco.git
 
 ## 👩‍💻 Author
-Alina Rytisik
+Alina Rytsik
 Junior Frontend Developer | React | Vanilla JS | Python (DRF)
