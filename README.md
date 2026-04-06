@@ -42,4 +42,5 @@ Alina Rytsik
 Junior Frontend Developer | React | Vanilla JS | Python (DRF)
 
 LinkedIn: https://www.linkedin.com/in/alina-rytsik-0a4295257/
+
 Telegram: @AlinaRM7
