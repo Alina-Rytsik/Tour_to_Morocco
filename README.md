@@ -2,7 +2,7 @@
 
 A highly atmospheric, high-performance landing page for a travel agency specializing in expeditions to Morocco. 
 
-[🔗 Live Demo]
+[🔗 Live Demo](https://alina-rytsik.github.io/Tour_to_Morocco/)
 
 ## 🎯 Project Goals
 The main purpose of this project was to demonstrate core Frontend development skills without using heavy frameworks:
@@ -32,7 +32,7 @@ The main purpose of this project was to demonstrate core Frontend development sk
 
 ## ⚙️ Installation
 Just clone the repository and open `index.html` via Live Server:
-```bash
+```bash`
 git clone https://github.com/Alina-Rytsik/Tour_to_Morocco.git
 
 ## 👩‍💻 Author
