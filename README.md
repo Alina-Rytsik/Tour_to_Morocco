@@ -41,6 +41,6 @@ git clone https://github.com/Alina-Rytsik/Tour_to_Morocco.git
 Alina Rytsik
 Junior Frontend Developer | React | Vanilla JS | Python (DRF)
 
-LinkedIn: https://www.linkedin.com/in/alina-rytsik-0a4295257/
+LinkedIn: https://www.linkedin.com/in/alina-rytsik/
 
 Telegram: @AlinaRM7
